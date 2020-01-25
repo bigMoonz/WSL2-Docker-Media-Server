@@ -1,0 +1,182 @@
+version: "3"
+
+services:
+    nginx:
+        image: linuxserver/nginx
+        container_name: nginx
+        environment:
+            PUID: 0
+            PGID: 0
+            TZ: America/New_York
+        volumes:
+          - C:\Data\Docker\Nginx:/config
+        ports:
+          - 80:80
+          - 443:443
+        restart: always
+
+    portainer:
+        image: portainer/portainer
+        container_name: portainer
+        ports:
+            - "9000:9000"
+        command: -H unix:///var/run/docker.sock
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - C:\Data\Docker\Portainer:/data
+        restart: always
+
+    watchtower:
+        image: v2tec/watchtower
+        container_name: watchtower
+        environment: 
+            WATCHTOWER_NOTIFICATIONS: email
+            WATCHTOWER_NOTIFICATION_EMAIL_FROM: btwestmo@gmail.com
+            WATCHTOWER_NOTIFICATION_EMAIL_TO: btwestmo@gmail.com
+            WATCHTOWER_NOTIFICATION_EMAIL_SERVER: smtp.gmail.com
+            WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER: btwestmo@gmail.com
+            WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD: add_app_password
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - C:\Data\Docker\Watchtower\config.json:/config.json
+        command: --schedule "0 0 4 * * *" --cleanup
+
+    plex:
+        image: linuxserver/plex
+        container_name: plex
+        network_mode: host
+        environment:
+            PUID: 0
+            PGID: 0
+            VERSION: docker
+        volumes:
+            - C:\Data\Docker\Plex\Config:/config
+            - C:\Data\Media\TV:/data/tvshows
+            - C:\Data\Media\Movie:/data/movies
+            - C:\Data\Docker\Plex\Transcode:/transcode
+        ports:
+            - "32400:32400/tcp"
+            - "3005:3005/tcp"
+            - "8324:8324/tcp"
+            - "32469:32469/tcp"
+            - "1900:1900/udp"
+            - "32410:32410/udp"
+            - "32412:32412/udp"
+            - "32413:32413/udp"
+            - "32414:32414/udp"
+        restart: always
+
+    tautulli:
+        image: linuxserver/tautulli
+        container_name: tautulli
+        depends_on:
+            - plex
+        environment:
+            PUID: 0
+            PGID: 0
+            TZ: America/New_York
+        volumes:
+            - C:\Data\Docker\Tautulli\Config:/config
+            - C:\Data\Docker\Tautulli\Logs:/logs:ro
+            - C:\Data\Docker\Shared:/shared
+        ports:
+            - "8181:8181"
+        restart: always  
+
+    sonarr:
+        image: linuxserver/sonarr
+        container_name: sonarr
+        depends_on:
+            - nzbget
+        environment:
+            PUID: 0
+            PGID: 0
+            TZ: America/New_York
+            UMASK_SET: 022
+        volumes:
+            - C:\Data\Docker\Sonarr\Config:/config
+            - C:\Data\Media\TV:/tv
+            - C:\Data\Docker\Nzbget\Downloads:/downloads
+        ports:
+            - 8989:8989
+        restart: always
+
+    couchpotato:
+        image: "linuxserver/couchpotato"
+        container_name: "couchpotato"
+        environment:
+            PUID: 0
+            PGID: 0
+            TZ: America/New_York
+            UMASK_SET: 022
+        volumes:
+            - C:\Data\Docker\Couchpotato:/config
+            - C:\Data\Docker\Couchpotato\Downloads\completed:/downloads
+            - C:\Data\Media\Movie:/movies
+            - C:\Data\Docker\Shared:/shared
+        ports:
+            - 5050:5050
+        restart: always
+
+    radarr:
+        image: "linuxserver/radarr"
+        container_name: "radarr"
+        environment:
+            PUID: 0
+            PGID: 0
+            TZ: America/New_York
+        volumes:
+            - C:\Data\Docker\Radarr:/config
+            - C:\Data\Docker\Radarr\Downloads\completed:/downloads
+            - C:\Data\Media\Movie:/movies
+        ports:
+            - 7878:7878
+        restart: always
+
+    nzbget:
+        image: linuxserver/nzbget
+        container_name: nzbget
+        environment:
+            PUID: 0
+            PGID: 0
+            TZ: America/New_York
+        volumes:
+            - C:\Data\Docker\Nzbget\Config:/config
+            - C:\Data\Docker\Nzbget\Downloads:/downloads
+        ports:
+            - 6789:6789
+        restart: always
+
+    qbittorrent:
+        image: linuxserver/qbittorrent
+        container_name: qbittorrent
+        environment:
+            PUID: 0
+            PGID: 0
+            TZ: America/New_York
+            UMASK_SET: 022
+            WEBUI_PORT: 8080
+        volumes:
+            - C:\Data\Docker\Qbittorrent\Config:/config
+            - C:\Data\Docker\Qbittorrent\Downloads:/downloads
+            - C:\Data\Media\TV:/tv
+            - C:\Data\Media\Movie:/movies
+        ports:
+            - 31321:31321
+            - 31321:31321/udp
+            - 8080:8080
+        restart: always
+
+    hydra:
+        image: linuxserver/hydra2
+        container_name: hydra
+        environment:
+            PUID: 0
+            PGID: 0
+            TZ: America/New_York
+        volumes:
+            - C:\Data\Docker\Hydra2:/config
+            - C:\Data\Docker\Nzbget\Downloads:/downloads
+        ports:
+            - 5076:5076
+        restart: unless-stopped
