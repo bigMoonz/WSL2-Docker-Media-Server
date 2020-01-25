@@ -101,21 +101,20 @@ services:
             - 8989:8989
         restart: always
 
-    couchpotato:
-        image: "linuxserver/couchpotato"
-        container_name: "couchpotato"
+    lidarr:
+        image: linuxserver/lidarr
+        container_name: lidarr
         environment:
             PUID: 0
             PGID: 0
             TZ: America/New_York
             UMASK_SET: 022
         volumes:
-            - C:\Data\Docker\Couchpotato:/config
-            - C:\Data\Docker\Couchpotato\Downloads\completed:/downloads
-            - C:\Data\Media\Movie:/movies
-            - C:\Data\Docker\Shared:/shared
+            - C:\Data\Docker\Lidarr\Config:/config
+            - C:\Data\Docker\Lidarr\Downloads:/downloads
+            - C:\Data\Media\Music:/music
         ports:
-            - 5050:5050
+            - 8686:8686
         restart: always
 
     radarr:
