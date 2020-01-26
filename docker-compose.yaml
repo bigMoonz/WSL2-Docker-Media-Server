@@ -19,7 +19,7 @@ services:
         image: portainer/portainer
         container_name: portainer
         ports:
-            - "9000:9000"
+            - 9000:9000
         command: -H unix:///var/run/docker.sock
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
@@ -44,7 +44,6 @@ services:
     plex:
         image: linuxserver/plex
         container_name: plex
-        network_mode: host
         environment:
             PUID: 0
             PGID: 0
@@ -55,15 +54,15 @@ services:
             - C:\Data\Media\Movie:/data/movies
             - C:\Data\Docker\Plex\Transcode:/transcode
         ports:
-            - "32400:32400/tcp"
-            - "3005:3005/tcp"
-            - "8324:8324/tcp"
-            - "32469:32469/tcp"
-            - "1900:1900/udp"
-            - "32410:32410/udp"
-            - "32412:32412/udp"
-            - "32413:32413/udp"
-            - "32414:32414/udp"
+            - 32400:32400/tcp
+            - 3005:3005/tcp
+            - 8324:8324/tcp
+            - 32469:32469/tcp
+            - 1900:1900/udp
+            - 32410:32410/udp
+            - 32412:32412/udp
+            - 32413:32413/udp
+            - 32414:32414/udp
         restart: always
 
     tautulli:
@@ -80,7 +79,7 @@ services:
             - C:\Data\Docker\Tautulli\Logs:/logs:ro
             - C:\Data\Docker\Shared:/shared
         ports:
-            - "8181:8181"
+            - 8181:8181
         restart: always  
 
     sonarr:
@@ -118,8 +117,8 @@ services:
         restart: always
 
     radarr:
-        image: "linuxserver/radarr"
-        container_name: "radarr"
+        image: linuxserver/radarr
+        container_name: radarr
         environment:
             PUID: 0
             PGID: 0
