@@ -95,7 +95,7 @@ services:
         volumes:
             - C:\Data\Docker\Sonarr\Config:/config
             - C:\Data\Media\TV:/tv
-            - C:\Data\Docker\Nzbget\Downloads:/downloads
+            - C:\Data\Media\Downloads\:/downloads
         ports:
             - 8989:8989
         restart: always
@@ -110,7 +110,7 @@ services:
             UMASK_SET: 022
         volumes:
             - C:\Data\Docker\Lidarr\Config:/config
-            - C:\Data\Docker\Lidarr\Downloads:/downloads
+            - C:\Data\Media\Downloads:/downloads
             - C:\Data\Media\Music:/music
         ports:
             - 8686:8686
@@ -125,26 +125,10 @@ services:
             TZ: America/New_York
         volumes:
             - C:\Data\Docker\Radarr:/config
-            - C:\Data\Docker\Radarr\Downloads\completed:/downloads
+            - C:\Data\Media\Downloads:/downloads
             - C:\Data\Media\Movie:/movies
         ports:
             - 7878:7878
-        restart: always
-    
-    sabnzbd:
-        image: linuxserver/sabnzbd
-        container_name: sabnzbd
-        environment:
-            PUID: 0
-            PGID: 0
-            TZ: America/New_York
-        volumes:
-            - C:\Data\Docker\sabnzbd:/config
-            - C:\Data\Docker\sabnzbd\Downloads\completed:/downloads
-            - C:\Data\Docker\sabnzbd\Downloads\incomplete:/incomplete-downloads
-        ports:
-            - 8888:8080
-            - 9999:9090
         restart: always
 
     nzbget:
@@ -156,7 +140,7 @@ services:
             TZ: America/New_York
         volumes:
             - C:\Data\Docker\Nzbget\Config:/config
-            - C:\Data\Docker\Nzbget\Downloads:/downloads
+            - C:\Data\Media\Downloads:/downloads
         ports:
             - 6789:6789
         restart: always
@@ -190,7 +174,7 @@ services:
             TZ: America/New_York
         volumes:
             - C:\Data\Docker\Hydra2:/config
-            - C:\Data\Docker\Nzbget\Downloads:/downloads
+            - C:\Data\Media\Downloads:/downloads
         ports:
             - 5076:5076
         restart: always
@@ -204,7 +188,7 @@ services:
             TZ: America/New_York
         volumes:
             - C:\Data\Docker\Jackett\Config:/config
-            - C:\Data\Docker\Jackett\Download:/downloads
+            - C:\Data\Media\Downloads:/downloads
         ports:
             - 9117:9117
         restart: always
