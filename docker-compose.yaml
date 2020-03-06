@@ -14,6 +14,9 @@ services:
           - 80:80
           - 443:443
         restart: always
+        networks:
+            static-network:
+               ipv4_address: 172.20.0.2
 
     portainer:
         image: portainer/portainer
@@ -25,6 +28,9 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock
             - C:\Data\Docker\Portainer:/data
         restart: always
+        networks:
+            static-network:
+               ipv4_address: 172.20.0.3
 
     watchtower:
         image: v2tec/watchtower
@@ -40,6 +46,9 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock
             - C:\Data\Docker\Watchtower\config.json:/config.json
         command: --schedule "0 0 4 * * *" --cleanup
+        networks:
+            static-network:
+               ipv4_address: 172.20.0.4
 
     plex:
         image: linuxserver/plex
@@ -64,6 +73,9 @@ services:
             - 32413:32413/udp
             - 32414:32414/udp
         restart: always
+        networks:
+            static-network:
+               ipv4_address: 172.20.0.5
 
     tautulli:
         image: linuxserver/tautulli
@@ -80,7 +92,10 @@ services:
             - C:\Data\Docker\Shared:/shared
         ports:
             - 8181:8181
-        restart: always  
+        restart: always
+        networks:
+            static-network:
+               ipv4_address: 172.20.0.6
 
     sonarr:
         image: linuxserver/sonarr
@@ -99,6 +114,9 @@ services:
         ports:
             - 8989:8989
         restart: always
+        networks:
+            static-network:
+               ipv4_address: 172.20.0.7
 
     lidarr:
         image: linuxserver/lidarr
@@ -115,6 +133,9 @@ services:
         ports:
             - 8686:8686
         restart: always
+        networks:
+            static-network:
+               ipv4_address: 172.20.0.8
 
     radarr:
         image: linuxserver/radarr
@@ -130,6 +151,9 @@ services:
         ports:
             - 7878:7878
         restart: always
+        networks:
+            static-network:
+               ipv4_address: 172.20.0.9
 
     nzbget:
         image: linuxserver/nzbget
@@ -144,6 +168,9 @@ services:
         ports:
             - 6789:6789
         restart: always
+        networks:
+            static-network:
+               ipv4_address: 172.20.0.10
 
     qbittorrent:
         image: linuxserver/qbittorrent
@@ -164,6 +191,9 @@ services:
             - 31321:31321/udp
             - 8080:8080
         restart: always
+        networks:
+            static-network:
+               ipv4_address: 172.20.0.11
 
     hydra:
         image: linuxserver/hydra2
@@ -178,6 +208,9 @@ services:
         ports:
             - 5076:5076
         restart: always
+        networks:
+            static-network:
+               ipv4_address: 172.20.0.12
     
     jackett:
         image: linuxserver/jackett
@@ -192,3 +225,12 @@ services:
         ports:
             - 9117:9117
         restart: always
+        networks:
+            static-network:
+               ipv4_address: 172.20.0.13
+               
+networks:
+    static-network:
+        ipam:
+            config:
+              - subnet: 172.20.0.0/16
