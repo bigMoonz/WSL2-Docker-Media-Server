@@ -1,6 +1,7 @@
 version: "3"
 
 services:
+     
     nginx:
         image: linuxserver/nginx
         container_name: nginx
@@ -59,8 +60,8 @@ services:
             VERSION: docker
         volumes:
             - C:\Data\Docker\Plex\Config:/config
-            - C:\Data\Media\TV:/data/tvshows
-            - C:\Data\Media\Movie:/data/movies
+            - E:\Media\TV:/data/tvshows
+            - E:\Media\Movie:/data/movies
             - C:\Data\Docker\Plex\Transcode:/transcode
         ports:
             - 32400:32400/tcp
@@ -109,8 +110,8 @@ services:
             UMASK_SET: 022
         volumes:
             - C:\Data\Docker\Sonarr\Config:/config
-            - C:\Data\Media\TV:/tv
-            - C:\Data\Media\Downloads\:/downloads
+            - E:\Media\TV:/tv
+            - E:\Media\Downloads\:/downloads
         ports:
             - 8989:8989
         restart: always
@@ -128,8 +129,8 @@ services:
             UMASK_SET: 022
         volumes:
             - C:\Data\Docker\Lidarr\Config:/config
-            - C:\Data\Media\Downloads:/downloads
-            - C:\Data\Media\Music:/music
+            - E:\Media\Downloads:/downloads
+            - E:\Media\Music:/music
         ports:
             - 8686:8686
         restart: always
@@ -146,8 +147,8 @@ services:
             TZ: America/New_York
         volumes:
             - C:\Data\Docker\Radarr:/config
-            - C:\Data\Media\Downloads:/downloads
-            - C:\Data\Media\Movie:/movies
+            - E:\Media\Downloads:/downloads
+            - E:\Media\Movie:/movies
         ports:
             - 7878:7878
         restart: always
@@ -164,7 +165,7 @@ services:
             TZ: America/New_York
         volumes:
             - C:\Data\Docker\Nzbget\Config:/config
-            - C:\Data\Media\Downloads:/downloads
+            - E:\Media\Downloads:/downloads
         ports:
             - 6789:6789
         restart: always
@@ -184,8 +185,8 @@ services:
         volumes:
             - C:\Data\Docker\Qbittorrent\Config:/config
             - C:\Data\Docker\Qbittorrent\Downloads:/downloads
-            - C:\Data\Media\TV:/tv
-            - C:\Data\Media\Movie:/movies
+            - E:\Media\TV:/tv
+            - E:\Media\Movie:/movies
         ports:
             - 31321:31321
             - 31321:31321/udp
@@ -204,7 +205,7 @@ services:
             TZ: America/New_York
         volumes:
             - C:\Data\Docker\Hydra2:/config
-            - C:\Data\Media\Downloads:/downloads
+            - E:\Media\Downloads:/downloads
         ports:
             - 5076:5076
         restart: always
@@ -221,7 +222,7 @@ services:
             TZ: America/New_York
         volumes:
             - C:\Data\Docker\Jackett\Config:/config
-            - C:\Data\Media\Downloads:/downloads
+            - E:\Media\Downloads:/downloads
         ports:
             - 9117:9117
         restart: always
